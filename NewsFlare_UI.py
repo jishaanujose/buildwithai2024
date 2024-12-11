@@ -36,14 +36,15 @@ def news_extract(query):
     import urllib.request
 
     desc = []
-    image = []
+    image = [];sites=[]
     for i, each in enumerate(data['articles']):
         desc.append(each['description'])
+        sites.append(each['url'])
         if each['urlToImage'] is not None:
             image.append(each['urlToImage'])
         else:
             image.append('')
-    return desc,image
+    return desc,sites
 
 def embed(desc, image):
     query_embeddings = []
@@ -315,6 +316,14 @@ def sidebar_bg(side_bg):
        unsafe_allow_html=True
    )
 
+
+def make_clickable(link):
+    # target _blank to open new window
+    # extract clickable text to display for your link
+    #text = link.split('=')[1]
+    print(link)
+    return f'<a target="_blank" href="{link}"</a>'
+
 if __name__ == "__main__":
   side_bg = 'bckg.jpg'
   sidebar_bg(side_bg)
@@ -336,7 +345,8 @@ if __name__ == "__main__":
   #with col2:
   #  button2 = st.button("Regenerate")
   if button1:
-      desc, img=news_extract(query)
+      desc, sites=news_extract(query)
+      site_df=pd.DataFrame(sites,columns=['URL'])
       text=','.join(desc[:10])
       #text=embed(desc, img)
       responses=summariser(text,option, option1)
@@ -361,3 +371,6 @@ if __name__ == "__main__":
             video_generation(responses['summary'])
           st.write("Video Response:")
           st.video("output_with_audio.mp4")
+      df = pd.DataFrame()
+      df['References'] = site_df['URL'].head(5)
+      st.write(df.to_html(escape=False, index=False,render_links=True), unsafe_allow_html=True)
