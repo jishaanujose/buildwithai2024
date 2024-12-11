@@ -369,7 +369,7 @@ if __name__ == "__main__":
                   create_meme('meme_out.png',responses['meme'])
               st.write("Meme Response:")
               st.image("meme_image.png")
-            except:
+          except:
                 st.write('Cannot process the request')
       if cont=='Video':
           try:
