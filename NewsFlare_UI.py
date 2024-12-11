@@ -355,15 +355,17 @@ if __name__ == "__main__":
       if cont=='Text':
           st.text_area("Text Response:",f'{responses['summary']}')
       if cont=='Image':
-          resp_img = image_generation(responses['image'])
-          resp_img.save('img_out.png')
+          with st.spinner('In progress...'):
+              resp_img = image_generation(responses['image'])
+              resp_img.save('img_out.png')
           st.write("Image Response:")
           st.image("img_out.png")
       if cont=='Meme':
-          re_text=resentence(responses['image'])
-          resp_img = image_generation(re_text)
-          resp_img.save('meme_out.png')
-          create_meme('meme_out.png',responses['meme'])
+          with st.spinner('In progress...'):
+              re_text=resentence(responses['image'])
+              resp_img = image_generation(re_text)
+              resp_img.save('meme_out.png')
+              create_meme('meme_out.png',responses['meme'])
           st.write("Meme Response:")
           st.image("meme_image.png")
       if cont=='Video':
