@@ -382,5 +382,5 @@ if __name__ == "__main__":
       df = pd.DataFrame()
       df['References'] = site_df['URL'].head(5)
       st.write(df.to_html(escape=False, index=False,render_links=True), unsafe_allow_html=True)
-    if st.button("Refresh"):
+  if st.button("Refresh"):
       st.rerun()    
