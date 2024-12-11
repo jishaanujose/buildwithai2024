@@ -361,18 +361,24 @@ if __name__ == "__main__":
           st.write("Image Response:")
           st.image("img_out.png")
       if cont=='Meme':
-          with st.spinner('In progress...'):
-              re_text=resentence(responses['image'])
-              resp_img = image_generation(re_text)
-              resp_img.save('meme_out.png')
-              create_meme('meme_out.png',responses['meme'])
-          st.write("Meme Response:")
-          st.image("meme_image.png")
+          try:
+              with st.spinner('In progress...'):
+                  re_text=resentence(responses['image'])
+                  resp_img = image_generation(re_text)
+                  resp_img.save('meme_out.png')
+                  create_meme('meme_out.png',responses['meme'])
+              st.write("Meme Response:")
+              st.image("meme_image.png")
+            except:
+                st.write('Cannot process the request')
       if cont=='Video':
-          with st.spinner('In progress...'):
-            video_generation(responses['summary'])
-          st.write("Video Response:")
-          st.video("output_with_audio.mp4")
+          try:
+              with st.spinner('In progress...'):
+                video_generation(responses['summary'])
+              st.write("Video Response:")
+              st.video("output_with_audio.mp4")
+          except:
+                st.write('Cannot process the request')
       df = pd.DataFrame()
       df['References'] = site_df['URL'].head(5)
       st.write(df.to_html(escape=False, index=False,render_links=True), unsafe_allow_html=True)
